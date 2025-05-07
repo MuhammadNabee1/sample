@@ -1,0 +1,30 @@
+name: Automate Commit
+
+on:
+  push:
+    branches:
+      - apple
+
+jobs:
+  commit-changes:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 3: Make changes to the repository
+      - name: Make changes
+        run: |
+          echo "This file was updated automatically on $(date)" >> automated-file.txt
+
+      # Step 4: Commit the changes
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Automated update on $(date)" || echo "No changes to commit"
+
+      # Step 5: Push the changes back to the repository
+      - name: Push changes
+        run: git push https://github.com/nabeelspeehive/sample.git
